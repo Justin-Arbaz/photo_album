@@ -128,10 +128,11 @@ export default function DashboardLayout({ children, userRole }: DashboardLayoutP
               key={item.href}
               href={item.href}
               className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-                item.active
-                  ? 'bg-blue-100 text-blue-700'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-              }`}
+  'active' in item && item.active
+    ? 'bg-blue-100 text-blue-700'
+    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+}`}
+
             >
               <item.icon className="h-5 w-5" />
               <span>{item.label}</span>
