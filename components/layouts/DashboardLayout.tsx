@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -40,6 +41,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children, userRole }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     router.push('/auth/login');
@@ -47,7 +49,7 @@ export default function DashboardLayout({ children, userRole }: DashboardLayoutP
 
   const getNavItems = () => {
     const commonItems = [
-      { icon: LayoutDashboard, label: 'Dashboard', href: `/dashboard/${userRole}`, active: true },
+      { icon: LayoutDashboard, label: 'Dashboard', href: `/dashboard/${userRole}` },
     ];
 
     switch (userRole) {
@@ -128,11 +130,10 @@ export default function DashboardLayout({ children, userRole }: DashboardLayoutP
               key={item.href}
               href={item.href}
               className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
-  'active' in item && item.active
-    ? 'bg-blue-100 text-blue-700'
-    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-}`}
-
+                pathname === item.href
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+              }`}
             >
               <item.icon className="h-5 w-5" />
               <span>{item.label}</span>
